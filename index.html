@@ -12,21 +12,77 @@
 		}
 	</style>
 	<script>
-		
+		/**
+		* Encrypt text using key
+		* @param string k - secret key
+		* @param string t - plain text
+		* @return string
+		*/
+		function encrypt(k,t) {
+			k = document.getElementById("password").value;
+			//document.rc4.text.value=textToBase64(rc4(document.rc4.key.value,document.rc4.text.value))
+			document.getElementById("encryptedText").innerHTML = "Hello World";
+
+			//KSA - Key Scheduling Algorithm
+			//create 8b y 8 S-Box, fill it with numbers from 0 to 255
+			var sbox = [];//vector
+			for(i=0;i<256;i++){
+				sbox[i]=i;
+			}
+			//create 8 by 8 seed box, fill it up with the key
+			var kbox = [];
+			var keyIdx = k.length;
+			for(i=0;i<256;i++){
+				//keyIdx = keyIdx == k.length ? 0 : keyIdx++;
+				if(keyIdx==k.length){
+					keyIdx = 0;
+				}else{
+					keyIdx++;
+				}
+				kbox[i] = k.substr(keyIdx,1);
+			}
+			//randomize S-Box
+			//for each element in S-Box
+			for(i=0;i<256;i++){
+				debugger;
+				x = sbox[i];//S-Box position
+				y = kbox[i];//keybox position (character)
+				z = y.charCodeAt(0);//ascii code for keybox position
+				a = x + z;//add ascii code for keybox position to s-box position
+				b = a % 256;//check the sum doesn't exceed 256 (calculate mod)
+				//exchange S-Box position i to S-Box position at b
+				temp = sbox[i];
+				sbox[i] = sbox[b];
+				sbox[b] = temp;
+			} 
+
+
+			//PRGA - Pseudo-Random Generation Algorithm
+		}
+
+		/**
+		* Decrypt text using key
+		* @param string k - secret key
+		* @param string t - cipher text
+		* @return string
+		*/
+		function decrypt(k, ct) {
+			//document.rc4.text.value=(rc4(document.rc4.key.value,base64ToText(document.rc4.text.value)))
+		}
 	</script>
 </head>
 <body>
 	<h2>Simple RC4 stream cipher in javascript</h2>
 	<br>
-	<form action="">
+	<form name="rc4">
 		<input type="text" id="password" placeholder="Password">
 		<br>
 		<textarea id="plainText" placeholder="Type here your plaintext" rows="5"></textarea>
 		<br>
-		<input type="submit" id="encrypt" value="Encrypt"><input type="submit" id="decrypt" value="Decrypt">
+		<input type="button" id="btn-encrypt" value="Encrypt" onclick="encrypt()"><input type="button" id="btn-decrypt" value="Decrypt">
 	</form>
 	Encrypted text:
-	<div id=encryptedText></div>
+	<div id="encryptedText"></div>
 	
 </body>
 </html>
