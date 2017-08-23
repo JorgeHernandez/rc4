@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>RC</title>
+	<style>
+		* {
+			font-family: arial;
+		}
+		input, textarea, #encryptedText {
+			margin: 2em;
+		}
+	</style>
+	<script>
+		
+	</script>
+</head>
+<body>
+	<h2>Simple RC4 stream cipher in javascript</h2>
+	<br>
+	<form action="">
+		<input type="text" id="password" placeholder="Password">
+		<br>
+		<textarea id="plainText" placeholder="Type here your plaintext" rows="5"></textarea>
+		<br>
+		<input type="submit" id="encrypt" value="Encrypt">
+	</form>
+	Encrypted text:
+	<div id=encryptedText></div>
+	
+</body>
+</html>
