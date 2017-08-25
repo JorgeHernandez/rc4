@@ -56,13 +56,13 @@
 				sbox[i] = sbox[b];
 				sbox[b] = temp;
 			} 
-			console.dir(sbox);
+			console.dir(sbox);//final S vector
 
 			//PRGA - Pseudo-Random Generation Algorithm
 			//Generate key stream (same lenght than the message)
-			i = 0;
-			j = 0;
 			//for each letter in plaintext:
+			i = 0;//counter i
+			j = 0;//counter j
 			debugger;
 			var ksc;//key stream character
 			var ks = "";//key stream 
@@ -75,10 +75,9 @@
 				sbox[j] = temp;
 				//caracter en el keystream:
 				ksc = (sbox[i] + sbox[j]) % 256;
-				//convert ksc to char
-				ksc = String.fromCharCode(ksc);
+
 				//add ksc to key stream
-				ks = ks+ksc;
+				ks = ks+sbox[ksc];
 			}
 			console.log(t);
 			console.log(ks);
