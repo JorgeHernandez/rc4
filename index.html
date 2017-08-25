@@ -65,7 +65,7 @@
 			j = 0;//counter j
 			debugger;
 			var ksc;//key stream character
-			var ks = "";//key stream 
+			var ks = [];//key stream 
 			for(var l=0;l<t.length;l++){
 				i = (i+1) % 256;
 				j = (j + sbox[i]) % 256;
@@ -77,11 +77,27 @@
 				ksc = (sbox[i] + sbox[j]) % 256;
 
 				//add ksc to key stream
-				ks = ks+sbox[ksc];
+				ks.push(sbox[ksc]);
 			}
 			console.log(t);
 			console.log(ks);
 
+
+			//convert string plaintext to array
+			t = t.split("");
+			for(i=0;i<t.length;i++){
+				console.log(t[i]);
+				//convert each letter in plaintext vector to ascii code
+				t[i] = t[i].charCodeAt(0);
+			}
+
+			//plaintext xor key stream
+			var ct = [];//cipher text
+			for(i=0;i<t.length;i++){
+				ct.push(t[i]^ks[i]);
+			}
+
+			console.log(ct);
 		}
 
 		/**
