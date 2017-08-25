@@ -19,12 +19,12 @@
 		* @return string
 		*/
 		function encrypt(k,t) {
-			k = document.getElementById("password").value;
-			t = document.getElementById("plainText").value;
+			var k = document.getElementById("password").value;
+			var t = document.getElementById("plainText").value;
 			//document.rc4.text.value=textToBase64(rc4(document.rc4.key.value,document.rc4.text.value))
 			document.getElementById("encryptedText").innerHTML = "Hello World";
 
-			var i,j,k;
+			var i,j;
 			//KSA - Key Scheduling Algorithm
 			//create 8b y 8 S-Box, fill it with numbers from 0 to 255
 			var sbox = [];//vector
@@ -44,6 +44,7 @@
 			}
 			//randomize S-Box
 			//for each element in S-Box
+			var x,y,z,a,b,temp;
 			for(i=0;i<256;i++){
 				x = sbox[i];//S-Box position
 				y = kbox[i];//keybox position (character)
@@ -55,7 +56,7 @@
 				sbox[i] = sbox[b];
 				sbox[b] = temp;
 			} 
-			console.dir('Final S-Box',sbox);
+			console.dir(sbox);
 
 			//PRGA - Pseudo-Random Generation Algorithm
 			//Generate key stream (same lenght than the message)
@@ -63,25 +64,31 @@
 			j = 0;
 			//for each letter in plaintext:
 			debugger;
-			for(k=0;k<t.length;k++){
+			var ksc;//key stream character
+			var ks = "";//key stream 
+			for(var l=0;l<t.length;l++){
 				i = (i+1) % 256;
 				j = (j + sbox[i]) % 256;
 				//exchange sbox[i] with sbox[j]
 				temp = sbox[i];
 				sbox[i] = sbox[j];
 				sbox[j] = temp;
-				//stream key is the sum
-				ct = (sbox[i] + sbox[j]) % 256;
+				//caracter en el keystream:
+				ksc = (sbox[i] + sbox[j]) % 256;
+				//convert ksc to char
+				ksc = String.fromCharCode(ksc);
+				//add ksc to key stream
+				ks = ks+ksc;
 			}
-			//FIX MEEEEEEEEEEEEE
-			//con key juan y texto hello world, la s-box tiene un undefined en la posicion 4, que rompe todo
+			console.log(t);
+			console.log(ks);
 
 		}
 
 		/**
 		* Decrypt text using key
 		* @param string k - secret key
-		* @param string t - cipher text
+		* @param string ct - cipher text
 		* @return string
 		*/
 		function decrypt(k, ct) {
