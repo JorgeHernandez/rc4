@@ -12,6 +12,15 @@
 		}
 	</style>
 	<script>
+		/*
+		* Button Handler
+		*/
+		function onEncryptBtnClick(){
+				var k = document.getElementById("password").value;
+				var t = document.getElementById("plainText").value;
+				document.getElementById("encryptedText").innerHTML = encrypt(k,t);
+		}
+
 		/**
 		* Encrypt text using key
 		* @param string k - secret key
@@ -19,14 +28,13 @@
 		* @return string
 		*/
 		function encrypt(k,t) {
-			var k = document.getElementById("password").value;
-			var t = document.getElementById("plainText").value;
-			//document.rc4.text.value=textToBase64(rc4(document.rc4.key.value,document.rc4.text.value))
 			document.getElementById("encryptedText").innerHTML = "Hello World";
 
-			var i,j;
+
 			//KSA - Key Scheduling Algorithm
+			//==============================
 			//create 8b y 8 S-Box, fill it with numbers from 0 to 255
+			var i,j;
 			var sbox = [];//vector
 			for(i=0;i<256;i++){
 				sbox[i]=i;
@@ -59,6 +67,7 @@
 			console.dir(sbox);//final S vector
 
 			//PRGA - Pseudo-Random Generation Algorithm
+			//=========================================
 			//Generate key stream (same lenght than the message)
 			//for each letter in plaintext:
 			i = 0;//counter i
@@ -98,6 +107,7 @@
 			}
 
 			console.log(ct);
+			return ct;
 		}
 
 		/**
@@ -119,7 +129,7 @@
 		<br>
 		<textarea id="plainText" placeholder="Type here your plaintext" rows="5"></textarea>
 		<br>
-		<input type="button" id="btn-encrypt" value="Encrypt" onclick="encrypt()"><input type="button" id="btn-decrypt" value="Decrypt">
+		<input type="button" id="btn-encrypt" value="Encrypt" onclick="onEncryptBtnClick()"><input type="button" id="btn-decrypt" value="Decrypt">
 	</form>
 	Encrypted text:
 	<div id="encryptedText"></div>
