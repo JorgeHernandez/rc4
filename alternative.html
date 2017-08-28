@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>RC</title>
+	<style>
+		* {
+			font-family: arial;
+		}
+		input, textarea, #encryptedText {
+			margin: 2em;
+		}
+	</style>
+	<script>
+		/*
+		* Button Handler
+		*/
+		function onEncryptBtnClick(){
+				//var k = document.getElementById("password").value;
+				//var t = document.getElementById("plainText").value;
+				//document.getElementById("encryptedText").innerHTML = encrypt(k,t);
+				alert(rc4(rc4('www.tutorialspots.com', 'tutorialspots'), 'tutorialspots'))
+				//alert(rc4('www.tutorialspots.com', 'tutorialspots'))
+		}
+
+
+		function rc4(t, e) {
+			var i, n, r, a, s, o;
+			for (i = [], n = 0, a = "", s = 0; s < 256; s++){
+				i[s] = s;	
+			} 
+			for (s = 0; s < 256; s++){
+				n = (n + i[s] + e.charCodeAt((s % e.length))) % 256,
+				r = i[s],
+				i[s] = i[n],
+				i[n] = (r);				
+			}
+			debugger;
+			console.log(s);
+			for (s = 0, n = 0, o = 0; o < t.length; o++){
+				s = ((s + 1) % 256),
+				n = ((n + i[s]) % 256),
+				r = i[s],
+				i[s] = i[n],
+				i[n] = r,
+				a += String.fromCharCode(t.charCodeAt(o) ^ i[(i[s] + i[n]) % 256]);
+			}
+			return a
+		}
+</script>
+</head>
+<body>
+	<h2>Simple RC4 stream cipher in javascript</h2>
+	<br>
+	<form name="rc4">
+		<input type="text" id="password" placeholder="Password">
+		<br>
+		<textarea id="plainText" placeholder="Type here your plaintext" rows="5"></textarea>
+		<br>
+		<input type="button" id="btn-encrypt" value="Encrypt" onclick="onEncryptBtnClick()"><input type="button" id="btn-decrypt" value="Decrypt">
+	</form>
+	Encrypted text:
+	<div id="encryptedText"></div>
+	
+</body>
+</html>
