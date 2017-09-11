@@ -28,6 +28,18 @@
 				document.getElementById("encryptedText").innerHTML = rc4(k,t);
 		}
 
+		function hexaToAscii(hexaString){
+			var output = '';
+			//read 2 chars on each iteration
+			for(var i = 0; i<hexaString.length; i+=2){
+				output += String.fromCharCode(parseInt(hexaString.substr(i,2),16)); 
+			}
+			return output;
+		}
+
+		//test case hello = 68 65 6c 6c 6f
+		//alert(hexaToAscii("68656c6c6f"));
+
 		/**
 		* Encrypt/Decrypt text using key
 		* @param string k - secret key
