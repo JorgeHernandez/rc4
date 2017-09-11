@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>RC</title>
+	<title>RC4</title>
 	<style>
 		* {
 			font-family: arial;
@@ -29,12 +29,12 @@
 		}
 
 		/**
-		* Encrypt text using key
+		* Encrypt/Decrypt text using key
 		* @param string k - secret key
-		* @param string t - plain text
+		* @param string t - text
 		* @return string
 		*/
-		function encrypt(k,t) {
+		function rc4(k,t) {
 			document.getElementById("encryptedText").innerHTML = "Hello World";
 
 			//check 1 <= k <= 256
@@ -87,7 +87,7 @@
 			//debugger;
 			var ksc;//key stream character
 			var ks = [];//key stream 
-			var ct;//output
+			var output;
 			for(var m=0;m<t.length;m++){
 				i = (i+1) % 256;
 				j = (j + sbox[i]) % 256;
@@ -101,23 +101,13 @@
 				ksc = (sbox[i] + sbox[j]) % 256;
 
 				//append encrypted char to output ( cleartext XOR keystream)
-				ct += String.fromCharCode(t.charCodeAt(m) ^ sbox[ksc]);
+				output += String.fromCharCode(t.charCodeAt(m) ^ sbox[ksc]);
 			}
 			console.log(t);//string plain text
 			console.log(ksc);//keystream
-			console.log(ct);//cipher text
+			console.log(output);//cipher text
 			debugger;
-			return ct;
-		}
-
-		/**
-		* Decrypt text using key
-		* @param string k - secret key
-		* @param string ct - cipher text
-		* @return string
-		*/
-		function decrypt(k, ct) {
-			//document.rc4.text.value=(rc4(document.rc4.key.value,base64ToText(document.rc4.text.value)))
+			return output;
 		}
 	</script>
 </head>
