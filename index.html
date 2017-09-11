@@ -25,7 +25,7 @@
 		function onEncryptBtnClick(){
 				var k = document.getElementById("password").value;
 				var t = document.getElementById("plainText").value;
-				document.getElementById("encryptedText").innerHTML = encrypt(k,t);
+				document.getElementById("encryptedText").innerHTML = rc4(k,t);
 		}
 
 		/**
